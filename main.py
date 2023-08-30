@@ -17,6 +17,12 @@ def ignore_other_users(message):
     pass
 
 
+@bot.message_handler(commands=['getchatid'])
+def get_chat_id(message):
+    chat_id = message.chat.id
+    bot.reply_to(message, f'Ваш чат айди: {chat_id}')
+
+
 @bot.message_handler(commands=['start'])
 def start(message):
     user_id = message.from_user.id
@@ -39,11 +45,6 @@ def handle_start_module2(message):
     response = run_remote_script_second_module()
     bot.send_message(message.chat.id, response)
 
-
-@bot.message_handler(commands=['getchatid'])
-def get_chat_id(message):
-    chat_id = message.chat.id
-    bot.reply_to(message, f'Ваш чат айди: {chat_id}')
 
 @bot.message_handler(func=lambda message: message.text == "CHECK BALANCE (USDT)")
 def handle_check(message):
