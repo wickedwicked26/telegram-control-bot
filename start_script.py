@@ -1,3 +1,5 @@
+import os
+
 import paramiko
 from telebot import types
 
@@ -17,10 +19,10 @@ def run_remote_script_first_module():
     try:
         client.connect(hostname=host, port=port, username=username, password=password)
 
-        stdin, stdout, stderr = client.exec_command(f"python {remote_script_path}")
+        stdin, stdout, stderr = client.exec_command(f"python main_module.py")
         output = stdout.read().decode()
         error = stderr.read().decode()
-        stdin, stdout, stderr = client.exec_command(f'pgrep -af {remote_script_path}')
+        stdin, stdout, stderr = client.exec_command(f'pgrep -af main_module.py')
 
         process_list = stdout.read().decode().strip().split('\n')
 
@@ -31,6 +33,7 @@ def run_remote_script_first_module():
             return 'SOMETHING WRONG WITH CONNECTION TO SERVER'
 
     except Exception as e:
+
         return f'BOT IS WORKING'
     finally:
         client.close()
@@ -48,10 +51,10 @@ def run_remote_script_second_module():
     try:
         client.connect(hostname=host, port=port, username=username, password=password)
 
-        stdin, stdout, stderr = client.exec_command(f"python {remote_script_path}")
+        stdin, stdout, stderr = client.exec_command(f"python module2.py")
         output = stdout.read().decode()
         error = stderr.read().decode()
-        stdin, stdout, stderr = client.exec_command(f'pgrep -af {remote_script_path}')
+        stdin, stdout, stderr = client.exec_command(f'pgrep -af module2.py')
 
         process_list = stdout.read().decode().strip().split('\n')
 
