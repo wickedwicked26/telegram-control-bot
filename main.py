@@ -1,6 +1,7 @@
 import telebot
 from start_script import run_remote_script_first_module, start_button_first_module, start_button_second_module, \
     run_remote_script_second_module
+from check_script import check_process_button, check_first_script, check_process_button2, check_second_script
 from stop_script import stop_remote_script, stop_button
 from check_balance import check_button, check_balance
 from telebot import types
@@ -30,8 +31,21 @@ def start(message):
         bot.send_message(user_id, 'У вас нет доступа к боту.')
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(start_button_first_module, start_button_second_module, stop_button, check_button)
+    markup.add(start_button_first_module, start_button_second_module, stop_button,
+               check_process_button, check_process_button2, check_button,)
     bot.send_message(message.chat.id, "Выберите действие:", reply_markup=markup)
+
+
+@bot.message_handler(func=lambda message: message.text == "CHECK MODULE 1")
+def handle_check(message):
+    response = check_first_script()
+    bot.send_message(message.chat.id, response)
+
+
+@bot.message_handler(func=lambda message: message.text == "CHECK MODULE 2")
+def handle_check(message):
+    response = check_second_script()
+    bot.send_message(message.chat.id, response)
 
 
 @bot.message_handler(func=lambda message: message.text == "START MODULE 1")

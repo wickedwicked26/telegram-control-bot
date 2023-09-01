@@ -2,26 +2,25 @@ from config import port, host, username, password
 import paramiko
 from telebot import types
 
-start_button_first_module = types.KeyboardButton("START MODULE 1")
-start_button_second_module = types.KeyboardButton("START MODULE 2")
+check_process_button = types.KeyboardButton('CHECK MODULE 1')
+check_process_button2 = types.KeyboardButton('CHECK MODULE 2')
 
 
-
-def run_remote_script_first_module():
+def check_first_script():
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     try:
         client.connect(hostname=host, port=port, username=username, password=password)
 
-        stdin, stdout, stderr = client.exec_command(f"sudo systemctl start module1.service")
-        output = stdout.read().decode()
+        stdin, stdout, stderr = client.exec_command(f"sudo systemctl status module1.service")
+        output = stdout.read().decode('utf-8')
         error = stderr.read().decode()
 
         process_list = stdout.read().decode().strip().split('\n')
 
         if process_list:
-            return f'[INFO] MODULE 1 is starting...'
+            return f'[INFO] MODULE 1 :{output}'
 
         else:
             return f'[INFO] SOMETHING WRONG : {error}'
@@ -34,29 +33,28 @@ def run_remote_script_first_module():
         client.close()
 
 
-def run_remote_script_second_module():
-    remote_script_path = ''
+def check_second_script():
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     try:
         client.connect(hostname=host, port=port, username=username, password=password)
 
-        stdin, stdout, stderr = client.exec_command(f"sudo systemctl start module2.service")
-        output = stdout.read().decode()
+        stdin, stdout, stderr = client.exec_command(f"sudo systemctl status module2.service")
+        output = stdout.read().decode('utf-8')
         error = stderr.read().decode()
 
         process_list = stdout.read().decode().strip().split('\n')
 
         if process_list:
-            return f'[INFO] MODULE 2 is starting...'
+            return f'[INFO] MODULE 2 :{output}'
 
         else:
             return f'[INFO] SOMETHING WRONG : {error}'
 
     except Exception as e:
 
-        return f'[INFO] EXECPTIOM : {e}'
+        return f'[INFO] EXCEPTION : {e}'
 
     finally:
         client.close()

@@ -24,7 +24,7 @@ def stop_remote_script():
         process_list2 = stdout2.read().decode().strip().split('\n')
 
         if process_list:
-            return f'[INFO] MODULE 1 is {process_list}\nMODULE 2 is {process_list2}'
+            return f'[INFO] BOT STOPPED'
 
         else:
             return f'[INFO] SOMETHING WRONG : {error}'
