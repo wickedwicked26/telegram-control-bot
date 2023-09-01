@@ -1,3 +1,4 @@
+from config import port, host, username, password
 import paramiko
 from telebot import types
 import os
@@ -6,12 +7,6 @@ stop_button = types.KeyboardButton("STOP BOT")
 
 
 def stop_remote_script():
-    host = ''
-    port = int()
-    username = ''
-    password = ''
-    remote_script_path = ''
-
     client = paramiko.SSHClient()
     try:
         client.connect(hostname=host, username=username, password=password)
@@ -32,10 +27,7 @@ def stop_remote_script():
         else:
             return 'BOT STOPPED'
     except Exception as e:
-        os.system('pkill -f main_module.py')
-        os.system('pkill -f module2.py')
-        # return f'SOMETHING WENT WRONG : {e}'
-        return f'BOT WAS STOPPED {os.system("pkill -f module2.py")}'
+        return f'{e}'
 
     finally:
         client.close()

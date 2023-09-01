@@ -1,5 +1,4 @@
-import os
-
+from config import port, host, username, password
 import paramiko
 from telebot import types
 
@@ -8,10 +7,7 @@ start_button_second_module = types.KeyboardButton("START MODULE 2")
 
 
 def run_remote_script_first_module():
-    host = ''
-    port = int()
-    username = ''
-    password = ''
+
     remote_script_path = ''
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -40,10 +36,6 @@ def run_remote_script_first_module():
 
 
 def run_remote_script_second_module():
-    host = ''
-    port = int()
-    username = ''
-    password = ''
     remote_script_path = ''
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -51,7 +43,7 @@ def run_remote_script_second_module():
     try:
         client.connect(hostname=host, port=port, username=username, password=password)
 
-        stdin, stdout, stderr = client.exec_command(f"python module2.py")
+        stdin, stdout, stderr = client.exec_command(f"python3.10 module2.py")
         output = stdout.read().decode()
         error = stderr.read().decode()
         stdin, stdout, stderr = client.exec_command(f'pgrep -af module2.py')
