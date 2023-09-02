@@ -9,6 +9,10 @@ from config import allowed_users, API_TOKEN
 
 bot = telebot.TeleBot(API_TOKEN)
 
+WEBHOOK_SSL_CERT = './webhook_cert.pem'  # Path to the ssl certificate
+WEBHOOK_SSL_PRIV = './webhook_pkey.pem'  # Path to the ssl private key
+DOMAIN = '80.89.228.90'
+
 
 @bot.message_handler(func=lambda message: message.from_user.id not in allowed_users)
 def ignore_other_users(message):
@@ -32,7 +36,7 @@ def start(message):
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(start_button_first_module, start_button_second_module, stop_button,
-               check_process_button, check_process_button2, check_button,)
+               check_process_button, check_process_button2, check_button, )
     bot.send_message(message.chat.id, "Выберите действие:", reply_markup=markup)
 
 
@@ -74,7 +78,11 @@ def handle_stop(message):
 
 if __name__ == '__main__':
     try:
-        bot.polling()
+        bot.run_webhooks(
+            listen=DOMAIN,
+            certificate=WEBHOOK_SSL_CERT,
+            certificate_key=WEBHOOK_SSL_PRIV
+        )
     except Exception as e:
         id = '5442883627'
         bot.send_message(id, f" ТЕЛЕГРАМ БОТ ОСТАНОВЛЕН. ВОЗНИКЛА ОШИБКА : {e}")
