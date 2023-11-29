@@ -1,1 +1,18 @@
+# TELEGRAM
+ALLOWED_USERS = [5442883627, "482991551", '1934151160']
+# API_TOKEN = '6474125786:AAH6GfKgVdEJc0S2cluzqvWd0krsuUPeuqc'
+API_TOKEN = '6607589754:AAFD5MsvUNd3E5knXSiICtf_Jn1rDmqVw5s'
+# BINANCE
+API_KEY = 'Zov3QhU0AMnYahRplA7W2ScG1L5fRFL40o2AXhe3Bx7cOcXj7U9lLXKgifiWlPUG'
+API_SECRET = 'BbQmUJGiuZE9MR0lHlOgiG5IJUn0ik2Ea4qjcjBu1EjkmVaS1FTccIsoY9DTlzn4'
+
+# SSH
+port = 22
+host = "80.89.228.90"
+username = 'root'
+password = '4505052208253213'
+
+
+COMMANDS_PATCH = '/root/project/commands/'
+DATA_BASE_PATCH = '/root/project/data_base.csv'
 
